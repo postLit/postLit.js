@@ -213,3 +213,9 @@ exports.setTheme = async function(theme) {
         console.error(data.error)
     }
 }
+
+exports.getTopUsers = async function() {
+    var response = await fetch("/top-users/");
+    var data = await response.json();
+    return data
+}
