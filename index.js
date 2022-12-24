@@ -36,10 +36,10 @@ exports.fetchMessages = async function() {
 
 exports.markAllRead = async function() {
     var response = await fetch("https://postlit.dev/markasread/", {
-        method: "POST",
+        method: 'POST',
         headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
+            'Accept': "application/json",
+            'Content-Type': "application/json",
         },
         body: JSON.stringify({ all: true }),
     });
@@ -196,5 +196,20 @@ exports.comment = async function(post, content) {
         console.log({
             "success": true
         })
+    }
+}
+
+exports.setTheme = async function(theme) {
+    var response = await fetch("/theme/", {
+        method: 'POST',
+        headers: {
+            'Accept': "application/json",
+            'Content-Type': "application/json",
+        },
+        body: JSON.stringify({ theme: theme }),
+    });
+    var data = await response.json();
+    if (data.error) {
+        console.error(data.error)
     }
 }
