@@ -34,6 +34,21 @@ exports.fetchMessages = async function() {
     return data
 }
 
+exports.markAllRead = async function() {
+    var response = await fetch("https://postlit.dev/markasread/", {
+        method: "POST",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ all: true }),
+    });
+    var data = await response.json();
+    if (data.error) {
+        console.error(data.error)
+    }
+}
+
 exports.post = async function(content) {
     var response = await fetch("https://postlit.dev/post/", {
         method: 'POST',
