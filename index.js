@@ -40,6 +40,7 @@ exports.markAllRead = async function() {
         headers: {
             'Accept': "application/json",
             'Content-Type': "application/json",
+            cookie: 'token=' + token
         },
         body: JSON.stringify({ all: true }),
     });
@@ -205,6 +206,7 @@ exports.setTheme = async function(theme) {
         headers: {
             'Accept': "application/json",
             'Content-Type': "application/json",
+            cookie: 'token=' + token
         },
         body: JSON.stringify({ theme: theme }),
     });
