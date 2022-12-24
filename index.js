@@ -200,7 +200,7 @@ exports.comment = async function(post, content) {
 }
 
 exports.setTheme = async function(theme) {
-    var response = await fetch("/theme/", {
+    var response = await fetch("https://postlit.dev/theme/", {
         method: 'POST',
         headers: {
             'Accept': "application/json",
@@ -215,7 +215,24 @@ exports.setTheme = async function(theme) {
 }
 
 exports.getTopUsers = async function() {
-    var response = await fetch("/top-users/");
+    var response = await fetch("https://postlit.dev/top-users/");
     var data = await response.json();
     return data
+}
+
+exports.inviteAmount = async function() {
+    var response = await fetch("https://postlit.dev/my-invites/", {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            cookie: 'token=' + token
+        },
+        body: JSON.stringify({})
+    })
+    var data = await response.json()
+    if (data.error) {
+        console.error(data.error)
+    } else if (data.success) {
+        return data.uses
+    }
 }
