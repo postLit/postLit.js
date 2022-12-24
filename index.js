@@ -177,6 +177,24 @@ exports.unlike = async function(post) {
     }
 }
 
+exports.pin = async function(post) {
+    var response = await fetch("https://postlit.dev/pin/", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            cookie: 'token=' + token
+        },
+        body: JSON.stringify({
+            post: post
+        })
+    })
+    var data = await response.json()
+    } if (data.error) {
+        console.error(data.error)
+    }
+}
+
 exports.comment = async function(post, content) {
     var response = await fetch("https://postlit.dev/comment/", {
         method: 'POST',
