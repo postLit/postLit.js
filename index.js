@@ -45,9 +45,7 @@ exports.markAllRead = async function() {
         body: JSON.stringify({ all: true }),
     });
     var data = await response.json();
-    if (data.error) {
-        console.error(data.error)
-    }
+    return data
 }
 
 exports.post = async function(content) {
@@ -190,9 +188,7 @@ exports.pin = async function(post) {
         })
     })
     var data = await response.json()
-    } if (data.error) {
-        console.error(data.error)
-    }
+    return data
 }
 
 exports.comment = async function(post, content) {
@@ -229,9 +225,7 @@ exports.setTheme = async function(theme) {
         body: JSON.stringify({ theme: theme }),
     });
     var data = await response.json();
-    if (data.error) {
-        console.error(data.error)
-    }
+    return data
 }
 
 exports.getTopUsers = async function() {
