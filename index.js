@@ -3,24 +3,25 @@ const fetch = (...args) => import('node-fetch').then(({
 }) => fetch(...args));
 let token = null
 
-exports.login = async function(username, password) {
-    var response = await fetch("https://postlit.dev/signin/", {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            username: username,
-            password: password
+exports.login = async function(token, password) {
+    if (password) {
+        throw new Error("Using a username and password for logging in is deprecated. Please use a token instead.");
+    } else {
+        var response = await fetch("https://postlit.dev/me/", {
+            method: 'get',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                cookie: 'token=' + token
+            }
         })
-    })
-    var data = await response.json()
-    if (data.success) {
-        token = data.token
-        return data.token
-    } else if (data.error) {
-        console.error(data.error)
+        var data = await response.json()
+        if (data) {
+            token = token
+            return data
+        } else if (data.error) {
+            console.error(data.error)
+        }
     }
 }
 
