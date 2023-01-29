@@ -35,6 +35,20 @@ exports.fetchMessages = async function() {
     return data
 }
 
+exports.markAllRead = async function() {
+    var response = await fetch("https://postlit.dev/markasread/", {
+        method: 'POST',
+        headers: {
+            'Accept': "application/json",
+            'Content-Type': "application/json",
+            cookie: 'token=' + token
+        },
+        body: JSON.stringify({ all: true }),
+    });
+    var data = await response.json();
+    return data
+}
+
 exports.post = async function(content) {
     var response = await fetch("https://postlit.dev/post/", {
         method: 'POST',
@@ -162,6 +176,22 @@ exports.unlike = async function(post) {
     }
 }
 
+exports.pin = async function(post) {
+    var response = await fetch("https://postlit.dev/pin/", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            cookie: 'token=' + token
+        },
+        body: JSON.stringify({
+            post: post
+        })
+    })
+    var data = await response.json()
+    return data
+}
+
 exports.comment = async function(post, content) {
     var response = await fetch("https://postlit.dev/comment/", {
         method: 'POST',
@@ -182,5 +212,42 @@ exports.comment = async function(post, content) {
         console.log({
             "success": true
         })
+    }
+}
+
+exports.setTheme = async function(theme) {
+    var response = await fetch("https://postlit.dev/theme/", {
+        method: 'POST',
+        headers: {
+            'Accept': "application/json",
+            'Content-Type': "application/json",
+            cookie: 'token=' + token
+        },
+        body: JSON.stringify({ theme: theme }),
+    });
+    var data = await response.json();
+    return data
+}
+
+exports.getTopUsers = async function() {
+    var response = await fetch("https://postlit.dev/top-users/");
+    var data = await response.json();
+    return data
+}
+
+exports.inviteAmount = async function() {
+    var response = await fetch("https://postlit.dev/my-invites/", {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            cookie: 'token=' + token
+        },
+        body: JSON.stringify({})
+    })
+    var data = await response.json()
+    if (data.error) {
+        console.error(data.error)
+    } else if (data.success) {
+        return data.uses
     }
 }
