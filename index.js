@@ -147,6 +147,21 @@ postLitClient.fetchPost = async function (post) {
   }
 };
 
+postLitClient.fetchUser = async function (user) {
+  if (token) {
+    var response = await fetch("https://postlit.dev/users/" + user + "/data/", {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        cookie: "token=" + postLitClient.token,
+      },
+    });
+    return await response.json();
+  } else {
+    return null;
+  }
+};
+
 postLitClient.like = async function (post) {
   var response = await fetch("https://postlit.dev/like/", {
     method: "POST",
